@@ -27,7 +27,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
     $scope.primarySkillsPerPage = 5; // this should match however many results your API puts on one page
     $scope.zeroBasedCurrentPage = 0;
 
-    $http.get('http://127.0.0.1:3000/primary_skills_count')
+    $http.get('primary_skills_count')
         .then(function (result) {
 	    $scope.primarySkillsCount = result.data.Count;
 	    $scope.numberOfPages = Math.floor($scope.primarySkillsCount / $scope.primarySkillsPerPage);
@@ -115,7 +115,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
   };
 
   function getResultsPage(pageNumber) {
-    $http.get('http://127.0.0.1:3000/skills/' + pageNumber + '/' + $scope.primarySkillsPerPage)
+    $http.get('skills/' + pageNumber + '/' + $scope.primarySkillsPerPage)
         .then(function (result) {
             $scope.skills = result.data;
             $scope.skills_length = result.data.length;
@@ -125,7 +125,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
   }
 
   function getSkills() {
-    $http.get('http://127.0.0.1:3000/skills')
+    $http.get('skills')
         .then(function (result) {
             $scope.skills = result.data;
             $scope.skills_length = result.data.length;
@@ -143,7 +143,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 	  }
       ********/
 
-    $http.get('http://127.0.0.1:3000/skills/' + searchTerm)
+    $http.get('skills/' + searchTerm)
         .then(function (result) {
             $scope.skills = result.data;
             $scope.skills_length = result.data.length;
