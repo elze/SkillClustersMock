@@ -26925,7 +26925,7 @@ function fakeFilter(element) {
 
 
 
-app.use(express.static('C:\\Users\\elze\\Documents\\MyProjects\\Express\\SkillClustersMock\\static'));
+app.use(express.static('./static'));
 
 
 app.get('/', function (req, res) {
