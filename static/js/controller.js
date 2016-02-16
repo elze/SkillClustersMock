@@ -25,9 +25,9 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
     secondaryBoxColors = ['#BCD6C9', '#61B58D', '#7DB19B', '#AD6798', '#5E6B64', '#5B829C', '#2A1768'];
 
     $scope.primarySkillsPerPage = 5; // this should match however many results your API puts on one page
-    var zeroBasedCurrentPage = 0;
+    $scope.zeroBasedCurrentPage = 0;
 
-    $http.get('http://127.0.0.1:3000/primary_skills_count')
+    $http.get('primary_skills_count')
         .then(function (result) {
 	    $scope.primarySkillsCount = result.data.Count;
 	    $scope.numberOfPages = Math.floor($scope.primarySkillsCount / $scope.primarySkillsPerPage);
@@ -43,10 +43,10 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 	  });
 
 
-    getResultsPage(1);
+    getSkills()
   
     $scope.pagination = {
-    current: 1
+      current: 1
     };
 
     $scope.pageChanged = function(newPage) {
@@ -57,8 +57,8 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 	  delete $scope.checkboxModels[key];
 	  }
       ********/
-      getResultsPage(newPage);
-      zeroBasedCurrentPage = newPage-1;
+    //      getResultsPage(newPage);
+    //$scope.zeroBasedCurrentPage = newPage-1;
   };
 
   function populateData() {
@@ -115,11 +115,21 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
   };
 
   function getResultsPage(pageNumber) {
-    $http.get('http://127.0.0.1:3000/skills/' + pageNumber + '/' + $scope.primarySkillsPerPage)
+    $http.get('skills/' + pageNumber + '/' + $scope.primarySkillsPerPage)
         .then(function (result) {
             $scope.skills = result.data;
             $scope.skills_length = result.data.length;
 	    populateData();
+
+        });
+  }
+
+  function getSkills() {
+    $http.get('skills')
+        .then(function (result) {
+            $scope.skills = result.data;
+            $scope.skills_length = result.data.length;
+            populateData();
 
         });
   };
@@ -133,7 +143,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 	  }
       ********/
 
-    $http.get('http://127.0.0.1:3000/skills/' + searchTerm)
+    $http.get('skills/' + searchTerm)
         .then(function (result) {
             $scope.skills = result.data;
             $scope.skills_length = result.data.length;
